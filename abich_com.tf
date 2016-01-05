@@ -14,6 +14,14 @@ resource "digitalocean_droplet" "example" {
     region = "${var.do_region}"
     size = "512mb"
     ssh_keys = [1582240]
+    provisioner "remote-exec" {
+        inline = [
+	"apt-get update",
+	"apt-get install -y puppet",
+        "puppet apply",
+        "consul agent -server -bootstrap"
+        ]
+    }
 }
 
 # Create a new domain record
