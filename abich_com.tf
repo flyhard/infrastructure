@@ -16,6 +16,27 @@ resource "digitalocean_droplet" "example" {
     ssh_keys = [1582240]
 }
 
+# Create a new domain record
+resource "digitalocean_domain" "default" {
+    name = "abich.com"
+    ip_address = "173.254.28.90"
+}
+# Create a new domain record
+resource "digitalocean_domain" "www" {
+    name = "www.abich.com"
+    ip_address = "173.254.28.90"
+}
+# Create a new domain record
+resource "digitalocean_domain" "mail" {
+    name = "mail.abich.com"
+    ip_address = "173.254.28.90"
+}
+# Create a new domain record
+resource "digitalocean_domain" "www" {
+    name = "test.abich.com"
+    ip_address = "${digitalocean_droplet.example.ipv4_address}"
+}
+
 output "ip" {
     value = "${digitalocean_droplet.example.ipv4_address}"
 }
