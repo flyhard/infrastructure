@@ -1,3 +1,4 @@
+
 provider "digitalocean" {
     token = "${var.do_token}"
 }
@@ -8,12 +9,17 @@ provider "aws" {
     region = "${var.region}"
 }
 
+resource "digitalocean_ssh_key" "defaultKey"{
+	name="deployment key"
+	public_key="${file("provision_key")}"
+}
+
 resource "digitalocean_droplet" "example" {
     image = "ubuntu-14-04-x64"
     name = "web-1"
     region = "${var.do_region}"
     size = "512mb"
-    ssh_keys = [1582240]
+    ssh_keys = [1582240,"${digitalocean_ssh_key.defaultKey.fingerprint}"]
     provisioner "remote-exec" {
         inline = [
 	"apt-get update",
@@ -21,6 +27,12 @@ resource "digitalocean_droplet" "example" {
         "puppet apply",
         "consul agent -server -bootstrap"
         ]
+    }
+    connection {
+      user = "root"
+      type = "ssh"
+      private_key = "${digitalocean_ssh_key.defaultKey.public_key}"
+      timeout = "2m"
     }
 }
 
