@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "example" {
     connection {
       user = "root"
       type = "ssh"
-      private_key = "${var.private_key}"
+      private_key = "${var.secret_key}"
       timeout = "2m"
     }
 }
