@@ -7,3 +7,7 @@ variable "do_token" {}
 variable "do_region" {
     default = "lon1"
 }
+
+variable "secret_key" {}
+variable "public_key" {}
+

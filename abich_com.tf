@@ -11,7 +11,7 @@ provider "aws" {
 
 resource "digitalocean_ssh_key" "defaultKey"{
 	name="deployment key"
-	public_key="${file("provision_key")}"
+	public_key="${var.public_key}"
 }
 
 resource "digitalocean_droplet" "example" {
@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "example" {
     connection {
       user = "root"
       type = "ssh"
-      private_key = "${digitalocean_ssh_key.defaultKey.public_key}"
+      private_key = "${var.private_key}"
       timeout = "2m"
     }
 }
