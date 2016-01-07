@@ -11,3 +11,5 @@ variable "do_region" {
 variable "private_key" {}
 variable "public_key" {}
 
+variable "atlas_token" {}
+

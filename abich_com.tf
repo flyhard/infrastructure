@@ -20,8 +20,9 @@ resource "digitalocean_droplet" "example" {
   size = "512mb"
   ssh_keys = [
     1582240,
-    "${digitalocean_ssh_key.defaultKey.fingerprint}"]
-  provisioner "file" = {
+    "${digitalocean_ssh_key.defaultKey.fingerprint}"
+  ]
+  provisioner "file" {
     source = "consul_0.5.2_linux_amd64.zip"
     destination = "/tmp/consul.zip"
   }
@@ -29,7 +30,9 @@ resource "digitalocean_droplet" "example" {
     inline = [
       "apt-get update",
       "apt-get install -y docker unzip",
-      "unzip /tmp/consul.zip -d /usr/local/bin"
+      "unzip /tmp/consul.zip -d /usr/local/bin",
+      "mkdir /data",
+      "consul agent -atlas-join -atlas-token ${var.atlas_token} -data-dir /data"
     ]
   }
   connection {
