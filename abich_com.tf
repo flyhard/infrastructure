@@ -15,7 +15,7 @@ resource "digitalocean_ssh_key" "defaultKey"{
 }
 
 resource "digitalocean_droplet" "example" {
-    image = "ubuntu-14-04-x64"
+    image = "debian-7-0-x64"
     name = "web-1"
     region = "${var.do_region}"
     size = "512mb"
