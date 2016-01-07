@@ -8,6 +8,6 @@ variable "do_region" {
     default = "lon1"
 }
 
-variable "secret_key" {}
+variable "private_key" {}
 variable "public_key" {}
 
