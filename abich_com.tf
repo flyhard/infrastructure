@@ -54,8 +54,8 @@ ip_address = "173.254.28.90"
 }
 # Create a new domain record
 resource "digitalocean_domain" "test" {
-name = "test.abich.com"
-ip_address = "${digitalocean_droplet.example.ipv4_address}"
+  name = "test.abich.com"
+  ip_address = "${digitalocean_droplet.example.ipv4_address}"
 }
 
 output "ip" {
