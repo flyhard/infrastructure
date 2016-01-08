@@ -39,23 +39,29 @@ resource "digitalocean_droplet" "example" {
 
 # Create a new domain record
 resource "digitalocean_domain" "default" {
-name = "abich.com"
-ip_address = "173.254.28.90"
+  name = "abich.com"
+  ip_address = "173.254.28.90"
 }
 # Create a new domain record
-resource "digitalocean_domain" "www" {
-name = "www.abich.com"
-ip_address = "173.254.28.90"
+resource "digitalocean_record" "www" {
+  domain = "${digitalocean_domain.default.name}"
+  type = "A"
+  name = "www"
+  value = "173.254.28.90"
 }
 # Create a new domain record
-resource "digitalocean_domain" "mail" {
-name = "mail.abich.com"
-ip_address = "173.254.28.90"
+resource "digitalocean_record" "mail" {
+  domain = "${digitalocean_domain.default.name}"
+  type = "A"
+  name = "mail"
+  value = "173.254.28.90"
 }
 # Create a new domain record
-resource "digitalocean_domain" "test" {
-  name = "test.abich.com"
-  ip_address = "${digitalocean_droplet.example.ipv4_address}"
+resource "digitalocean_record" "test" {
+  domain = "${digitalocean_domain.default.name}"
+  type = "A"
+  name = "test"
+  value = "${digitalocean_droplet.example.ipv4_address}"
 }
 
 output "ip" {
