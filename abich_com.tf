@@ -26,7 +26,7 @@ resource "digitalocean_droplet" "example" {
     inline = [
       "apt-get update",
       "apt-get install -y docker",
-      "docker run -d -P ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap"
+      "docker run -d -P ${var.consul_image} -atlas-join -atlas flyhard/abich -atlas-token ${var.atlas_token} -bootstrap"
     ]
   }
   connection {
