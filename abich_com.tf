@@ -22,17 +22,11 @@ resource "digitalocean_droplet" "example" {
     1582240,
     "${digitalocean_ssh_key.defaultKey.fingerprint}"
   ]
-  provisioner "file" {
-    source = "consul_0.5.2_linux_amd64.zip"
-    destination = "/tmp/consul.zip"
-  }
   provisioner "remote-exec" {
     inline = [
       "apt-get update",
-      "apt-get install -y docker unzip",
-      "unzip /tmp/consul.zip -d /usr/local/bin",
-      "mkdir /data",
-      "consul agent -atlas-join -atlas-token ${var.atlas_token} -data-dir /data"
+      "apt-get install -y docker",
+      "docker run --rm -it -P ${var.consul_image} -atlas-join -atlas "flyhard/abich" -atlas-token "${var.atlas_token}" -bootstrap"
     ]
   }
   connection {

@@ -13,3 +13,7 @@ variable "public_key" {}
 
 variable "atlas_token" {}
 
+variable "consul_image" {
+    default = "flyhard/consul"
+}
+
