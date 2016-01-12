@@ -14,7 +14,7 @@ resource "digitalocean_ssh_key" "defaultKey" {
 }
 
 resource "digitalocean_droplet" "example" {
-  image = "debian-7-0-x64"
+  image = "debian-8-x64"
   name = "web-1"
   region = "${var.do_region}"
   size = "512mb"
@@ -25,9 +25,12 @@ resource "digitalocean_droplet" "example" {
   provisioner "remote-exec" {
     inline = [
       "apt-get update",
-      "apt-get install -y docker",
-      "docker run -d -P ${var.consul_image} -atlas-join -atlas flyhard/abich -atlas-token ${var.atlas_token} -bootstrap"
-    ]
+      "apt-get install -y curl",
+      "curl -sSL https://get.docker.com/ | sh",
+      "docker run -d -P --name=consul ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap",
+      "docker run -d --link consul:consul --name=registrator --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consul://consul:8500"
+
+]
   }
   connection {
     user = "root"
