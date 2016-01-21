@@ -27,7 +27,7 @@ resource "digitalocean_droplet" "example" {
       "apt-get update",
       "apt-get install -y curl",
       "curl -sSL https://get.docker.com/ | sh",
-      "docker run -d -P --name=consul ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap",
+      "docker run -d --name=consul ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap",
       "docker run -d --link consul:consul --name=registrator --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consul://consul:8500"
     ]
   }
@@ -41,8 +41,16 @@ resource "digitalocean_droplet" "example" {
 
 # Configure the Docker provider
 provider "docker" {
-  host = "tcp://127.0.0.1:1234/"
+  host = "tcp://127.0.0.1:2376/"
 }
+
+//resource "docker_image" "debian" {
+//  name = "debian:jessie"
+//}
+//resource "docker_container" "debian" {
+//  name = "foo"
+//  image = "${docker_image.debian.latest}"
+//}
 
 # Create a new domain record
 resource "digitalocean_domain" "default" {
