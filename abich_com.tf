@@ -29,8 +29,7 @@ resource "digitalocean_droplet" "example" {
       "curl -sSL https://get.docker.com/ | sh",
       "docker run -d -P --name=consul ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap",
       "docker run -d --link consul:consul --name=registrator --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consul://consul:8500"
-
-]
+    ]
   }
   connection {
     user = "root"
@@ -38,6 +37,11 @@ resource "digitalocean_droplet" "example" {
     private_key = "${var.private_key}"
     timeout = "2m"
   }
+}
+
+# Configure the Docker provider
+provider "docker" {
+  host = "tcp://127.0.0.1:1234/"
 }
 
 # Create a new domain record
