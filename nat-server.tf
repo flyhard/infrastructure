@@ -12,6 +12,7 @@ resource "aws_instance" "nat" {
   connection {
     user = "ubuntu"
     key = "${var.private_key}"
+    timeout = "2m"
   }
   provisioner "remote-exec" {
     inline = [
