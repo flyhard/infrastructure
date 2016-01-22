@@ -2,56 +2,6 @@ provider "digitalocean" {
   token = "${var.do_token}"
 }
 
-provider "aws" {
-  access_key = "${var.access_key}"
-  secret_key = "${var.secret_key}"
-  region = "${var.region}"
-}
-
-resource "digitalocean_ssh_key" "defaultKey" {
-  name = "deployment key"
-  public_key = "${var.public_key}"
-}
-
-resource "digitalocean_droplet" "example" {
-  image = "debian-8-x64"
-  name = "web-1"
-  region = "${var.do_region}"
-  size = "512mb"
-  ssh_keys = [
-    1582240,
-    "${digitalocean_ssh_key.defaultKey.fingerprint}"
-  ]
-  provisioner "remote-exec" {
-    inline = [
-      "apt-get update",
-      "apt-get install -y curl",
-      "curl -sSL https://get.docker.com/ | sh",
-      "docker run -d --name=consul ${var.consul_image} -atlas-join -atlas \"flyhard/abich\" -atlas-token \"${var.atlas_token}\" -bootstrap",
-      "docker run -d --link consul:consul --name=registrator --volume=/var/run/docker.sock:/tmp/docker.sock gliderlabs/registrator:latest consul://consul:8500"
-    ]
-  }
-  connection {
-    user = "root"
-    type = "ssh"
-    private_key = "${var.private_key}"
-    timeout = "2m"
-  }
-}
-
-# Configure the Docker provider
-provider "docker" {
-  host = "tcp://127.0.0.1:2376/"
-}
-
-//resource "docker_image" "debian" {
-//  name = "debian:jessie"
-//}
-//resource "docker_container" "debian" {
-//  name = "foo"
-//  image = "${docker_image.debian.latest}"
-//}
-
 # Create a new domain record
 resource "digitalocean_domain" "default" {
   name = "abich.com"
@@ -64,6 +14,33 @@ resource "digitalocean_record" "www" {
   name = "www"
   value = "173.254.28.90"
 }
+resource "aws_route53_zone" "abich_com" {
+  name = "abich.com"
+}
+resource "aws_route53_record" "default" {
+  zone_id = "${aws_route53_zone.abich_com.zone_id}"
+  name = "www.abich.com"
+  ttl = "300"
+  type = "A"
+  records = [
+    "173.254.28.90"]
+}
+resource "aws_route53_record" "mail" {
+  zone_id = "${aws_route53_zone.abich_com.zone_id}"
+  name = "mail.abich.com"
+  ttl = "300"
+  type = "A"
+  records = [
+    "173.254.28.90"]
+}
+resource "aws_route53_record" "mail_mx" {
+  zone_id = "${aws_route53_zone.abich_com.zone_id}"
+  name = "mail.abich.com"
+  ttl = "300"
+  type = "MX"
+  records = [
+    "10 mail.abich.com"]
+}
 # Create a new domain record
 resource "digitalocean_record" "mail" {
   domain = "${digitalocean_domain.default.name}"
@@ -71,14 +48,7 @@ resource "digitalocean_record" "mail" {
   name = "mail"
   value = "173.254.28.90"
 }
-# Create a new domain record
-resource "digitalocean_record" "test" {
-  domain = "${digitalocean_domain.default.name}"
-  type = "A"
-  name = "test"
-  value = "${digitalocean_droplet.example.ipv4_address}"
-}
 
 output "ip" {
-value = "${digitalocean_droplet.example.ipv4_address}"
+  //value = "${digitalocean_droplet.example.ipv4_address}"
 }
