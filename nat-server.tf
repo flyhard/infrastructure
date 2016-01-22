@@ -11,20 +11,21 @@ resource "aws_instance" "nat" {
   }
   connection {
     user = "ubuntu"
-    key = "${var.private_key}"
-    timeout = "2m"
+    type = "ssh"
+    private_key = "${var.private_key}"
+    timeout = "5m"
   }
   provisioner "remote-exec" {
     inline = [
       "sudo iptables -t nat -A POSTROUTING -j MASQUERADE",
       "echo 1 | sudo tee /proc/sys/net/ipv4/conf/all/forwarding > /dev/null",
       /* Install docker */
-      "curl -sSL https://get.docker.com/ubuntu/ | sudo sh",
+      "curl -sSL https://get.docker.com/ | sudo sh",
       /* Initialize open vpn data container */
-      "sudo mkdir -p /etc/openvpn",
-      "sudo docker run --name ovpn-data -v /etc/openvpn busybox",
-      /* Generate OpenVPN server config */
-      "sudo docker run --volumes-from ovpn-data --rm gosuri/openvpn ovpn_genconfig -p ${var.vpc_cidr} -u udp://${aws_instance.nat.public_ip}"
     ]
   }
+}
+
+output "nat.ip" {
+  value = "${aws_instance.nat.public_ip}"
 }

@@ -41,14 +41,18 @@ resource "aws_route53_record" "mail_mx" {
   records = [
     "10 mail.abich.com"]
 }
+resource "aws_route53_record" "test" {
+  zone_id = "${aws_route53_zone.abich_com.zone_id}"
+  name = "test.abich.com"
+  ttl = "60"
+  type = "A"
+  records = [
+    "${aws_instance.nat.public_ip}"]
+}
 # Create a new domain record
 resource "digitalocean_record" "mail" {
   domain = "${digitalocean_domain.default.name}"
   type = "A"
   name = "mail"
   value = "173.254.28.90"
-}
-
-output "ip" {
-  //value = "${digitalocean_droplet.example.ipv4_address}"
 }
