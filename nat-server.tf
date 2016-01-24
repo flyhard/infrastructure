@@ -10,7 +10,7 @@ resource "aws_instance" "nat" {
     Name = "nat"
   }
   connection {
-    user = "ubuntu"
+    user = "root"
     type = "ssh"
     private_key = "${var.private_key}"
     timeout = "5m"

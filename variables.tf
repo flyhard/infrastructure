@@ -5,43 +5,53 @@ variable "public_subnet_cidr" {
 
 variable "vpc_cidr" {
   description = "CIDR for VPC"
-  default     = "10.128.0.0/16"
+  default = "10.128.0.0/16"
 }
 
 variable "private_subnet_cidr" {
   description = "CIDR for private subnet"
-  default     = "10.128.1.0/24"
+  default = "10.128.1.0/24"
 }
 
 /* Ubuntu 14.04 amis by region */
 variable "amis" {
   description = "Base AMI to launch the instances with trusty ubuntu 14.04 LTS	amd64	hvm:ebs-ssd"
   default = {
-    us-west-1 = "ami-06116566"
-    us-east-1 = "ami-fce3c696"
-    eu-west-1 = "ami-f95ef58a"
-    eu-central-1 = "ami-87564feb"
+    us-east-1 = "ami-cb2305a1"
+    us-west-1 = "ami-bdafdbdd"
+    us-west-2 = "ami-ec75908c"
+    eu-west-1 = "ami-13f84d60"
+    eu-central-1 = "ami-c3253caf"
+    ap-northeast-1 = "ami-e9724c87"
+    ap-southeast-1 = "ami-5f31fd3c"
+    ap-southeast-2 = "ami-83af8ae0"
   }
 }
-variable "access_key" {}
-variable "secret_key" {}
+variable "access_key" {
+}
+variable "secret_key" {
+}
 variable "region" {
-    default = "eu-west-1"
+  default = "eu-west-1"
 }
 variable "availability_zone" {
-    default = "eu-west-1a"
+  default = "eu-west-1a"
 }
-variable "do_token" {}
+variable "do_token" {
+}
 variable "do_region" {
-    default = "lon1"
+  default = "lon1"
 }
 
-variable "private_key" {}
-variable "public_key" {}
+variable "private_key" {
+}
+variable "public_key" {
+}
 
-variable "atlas_token" {}
+variable "atlas_token" {
+}
 
 variable "consul_image" {
-    default = "flyhard/consul"
+  default = "flyhard/consul"
 }
 
