@@ -2,18 +2,6 @@ provider "digitalocean" {
   token = "${var.do_token}"
 }
 
-# Create a new domain record
-resource "digitalocean_domain" "default" {
-  name = "abich.com"
-  ip_address = "173.254.28.90"
-}
-# Create a new domain record
-resource "digitalocean_record" "www" {
-  domain = "${digitalocean_domain.default.name}"
-  type = "A"
-  name = "www"
-  value = "173.254.28.90"
-}
 resource "aws_route53_zone" "abich_com" {
   name = "abich.com"
 }
@@ -48,11 +36,4 @@ resource "aws_route53_record" "test" {
   type = "A"
   records = [
     "${aws_instance.nat.public_ip}"]
-}
-# Create a new domain record
-resource "digitalocean_record" "mail" {
-  domain = "${digitalocean_domain.default.name}"
-  type = "A"
-  name = "mail"
-  value = "173.254.28.90"
 }
