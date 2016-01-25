@@ -19,10 +19,10 @@ resource "aws_instance" "nat" {
   }
   provisioner "remote-exec" {
     inline = [
-        "echo ECS_CLUSTER=docker | sudo tee /etc/ecs/ecs.config",
+        "echo ECS_CLUSTER=${aws_ecs_cluster.docker.name} | sudo tee /etc/ecs/ecs.config",
         "sudo docker rm ecs-agent",
-        "rm -rf /var/lib/ecs/*",
-        "/usr/libexec/amazon-ecs-init start"
+        "sudo rm -rf /var/lib/ecs/*",
+        "sudo /usr/libexec/amazon-ecs-init start"
     ]
   }
 }
