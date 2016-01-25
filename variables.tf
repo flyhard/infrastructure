@@ -27,6 +27,7 @@ variable "amis" {
     ap-southeast-2 = "ami-83af8ae0"
   }
 }
+variable "aws_account_id" {}
 variable "access_key" {
 }
 variable "secret_key" {

@@ -6,7 +6,7 @@ resource "aws_instance" "nat" {
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.nat.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   source_dest_check = false
-  iam_instance_profile = "${aws_iam_role.ecsRole.name}"
+  iam_instance_profile = "${aws_iam_instance_profile.default.name}"
 
   tags = {
     Name = "nat"
@@ -19,11 +19,10 @@ resource "aws_instance" "nat" {
   }
   provisioner "remote-exec" {
     inline = [
-//      "sudo iptables -t nat -A POSTROUTING -j MASQUERADE",
-//      "echo 1 | sudo tee /proc/sys/net/ipv4/conf/all/forwarding > /dev/null",
-      /* Install docker */
-//      "curl -sSL https://get.docker.com/ | sudo sh",
-      /* Initialize open vpn data container */
+        "echo ECS_CLUSTER=docker | sudo tee /etc/ecs/ecs.config",
+        "sudo docker rm ecs-agent",
+        "rm -rf /var/lib/ecs/*",
+        "/usr/libexec/amazon-ecs-init start"
     ]
   }
 }

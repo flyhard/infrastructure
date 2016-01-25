@@ -1,11 +1,31 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "Stmt1453670175697",
-      "Action": "ecs:*",
-      "Effect": "Allow",
-      "Resource": "*"
+    "InstanceProfile": {
+        "InstanceProfileId": "AIPAJG5V4OB5WLLGLQSMS", 
+        "Roles": [
+            {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2008-10-17", 
+                    "Statement": [
+                        {
+                            "Action": "sts:AssumeRole", 
+                            "Principal": {
+                                "Service": "ec2.amazonaws.com"
+                            }, 
+                            "Effect": "Allow", 
+                            "Sid": ""
+                        }
+                    ]
+                }, 
+                "RoleId": "AROAJYWBX4MPKFTNSMTRC", 
+                "CreateDate": "2016-01-25T17:51:20Z", 
+                "RoleName": "testECS", 
+                "Path": "/", 
+                "Arn": "arn:aws:iam::776793495141:role/testECS"
+            }
+        ], 
+        "CreateDate": "2016-01-25T17:51:20Z", 
+        "InstanceProfileName": "testECS", 
+        "Path": "/", 
+        "Arn": "arn:aws:iam::776793495141:instance-profile/testECS"
     }
-  ]
 }
