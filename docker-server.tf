@@ -1,5 +1,5 @@
 /* NAT/VPN server */
-resource "aws_instance" "nat" {
+resource "aws_instance" "docker" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.nano"
   subnet_id = "${aws_subnet.public.id}"
@@ -22,11 +22,11 @@ resource "aws_instance" "nat" {
         "echo ECS_CLUSTER=${aws_ecs_cluster.docker.name} | sudo tee /etc/ecs/ecs.config",
         "sudo docker rm ecs-agent",
         "sudo rm -rf /var/lib/ecs/*",
-        "sudo /usr/libexec/amazon-ecs-init start"
+        "sudo /usr/libexec/amazon-ecs-init start || cat /var/log/ecs/*"
     ]
   }
 }
 
-output "nat.ip" {
-  value = "${aws_instance.nat.public_ip}"
+output "docker.ip" {
+  value = "${aws_instance.docker.public_ip}"
 }

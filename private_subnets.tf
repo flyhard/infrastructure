@@ -4,7 +4,7 @@ resource "aws_subnet" "private" {
   cidr_block        = "${var.private_subnet_cidr}"
 //  availability_zone = "us-west-1a"
   map_public_ip_on_launch = false
-  depends_on = ["aws_instance.nat"]
+  depends_on = ["aws_instance.docker"]
   tags {
     Name = "private"
   }
@@ -15,7 +15,7 @@ resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.default.id}"
   route {
     cidr_block = "0.0.0.0/0"
-    instance_id = "${aws_instance.nat.id}"
+    instance_id = "${aws_instance.docker.id}"
   }
 }
 

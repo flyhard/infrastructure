@@ -35,5 +35,5 @@ resource "aws_route53_record" "test" {
   ttl = "60"
   type = "A"
   records = [
-    "${aws_instance.nat.public_ip}"]
+    "${aws_instance.docker.public_ip}"]
 }

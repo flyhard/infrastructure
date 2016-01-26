@@ -11,7 +11,15 @@ resource "aws_iam_role" "ecsRole" {
   "Version": "2008-10-17",
   "Statement": [
       {
-          "Action": "sts:AssumeRole",
+          "Action": [
+            "sts:AssumeRole",
+            "ecs:DeleteCluster",
+            "ecs:DeregisterContainerInstance",
+            "ecs:ListContainerInstances",
+            "ecs:RegisterContainerInstance",
+            "ecs:SubmitContainerStateChange",
+            "ecs:SubmitTaskStateChange"
+          ],
           "Principal": {
               "Service": "ec2.amazonaws.com"
           },
