@@ -12,8 +12,9 @@ resource "aws_ecs_task_definition" "consul" {
     "command": [
       "-atlas",
       "flyhard/atlas",
-      "-token",
-      "${var.atlas_token}"
+      "-atlas-token",
+      "${var.atlas_token}",
+      "-atlas-join"
     ],
     "memory": 50,
     "cpu": 1,
