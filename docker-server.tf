@@ -8,7 +8,7 @@ resource "aws_instance" "docker" {
   source_dest_check = false
   iam_instance_profile = "${aws_iam_instance_profile.default.name}"
   availability_zone = "${var.availability_zone}"
-  
+
   tags = {
     Name = "nat"
   }
