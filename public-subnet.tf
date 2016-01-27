@@ -9,6 +9,8 @@ resource "aws_subnet" "public" {
   cidr_block        = "${var.public_subnet_cidr}"
 //  availability_zone = "${var.availability_zone}"
   map_public_ip_on_launch = true
+  availability_zone = "${var.availability_zone}"
+
   depends_on = ["aws_internet_gateway.default"]
   tags {
     Name = "public"
