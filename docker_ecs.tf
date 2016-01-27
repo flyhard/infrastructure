@@ -9,5 +9,6 @@ resource "aws_ecs_service" "consul" {
   name = "consul"
   cluster = "${aws_ecs_cluster.docker.id}"
   count = 1
+  desired_count = 1
   task_definition = "${aws_ecs_task_definition.consul.arn}"
 }
