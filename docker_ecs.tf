@@ -10,6 +10,7 @@ resource "aws_ecs_task_definition" "consul" {
     "image": "flyhard/consul",
     "essential": true,
     "command": [
+      "-bootstrap",
       "-atlas",
       "flyhard/atlas",
       "-atlas-token",
