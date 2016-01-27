@@ -3,6 +3,10 @@
     "name": "consul",
     "image": "flyhard/consul",
     "essential": true,
+    "command": [
+      "-atlas",
+      "flyhard/atlas"
+    ],
     "memory": 50,
     "cpu": 1,
     "portMappings": [

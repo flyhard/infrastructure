@@ -3,7 +3,29 @@ resource "aws_ecs_cluster" "docker" {
 }
 resource "aws_ecs_task_definition" "consul" {
   family = "consul"
-  container_definitions = "${file("consul.json")}"
+  container_definitions = <<EOF
+[
+  {
+    "name": "consul",
+    "image": "flyhard/consul",
+    "essential": true,
+    "command": [
+      "-atlas",
+      "flyhard/atlas",
+      "-token",
+      "${var.atlas_token}"
+    ],
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+      {
+        "containerPort": 8500,
+        "hostPort": 80
+      }
+    ]
+  }
+]
+EOF
 }
 resource "aws_ecs_service" "consul" {
   name = "consul"
