@@ -23,7 +23,8 @@ resource "aws_instance" "docker" {
         "echo ECS_CLUSTER=${aws_ecs_cluster.docker.name} | sudo tee /etc/ecs/ecs.config",
         "sudo docker rm ecs-agent",
         "sudo rm -rf /var/lib/ecs/*",
-        "sudo /usr/libexec/amazon-ecs-init start || cat /var/log/ecs/*"
+        "sudo /usr/libexec/amazon-ecs-init start || cat /var/log/ecs/*",
+        "sudo usermod -a -G docker ec2-user"
     ]
   }
 }
