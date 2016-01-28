@@ -20,10 +20,6 @@ resource "aws_ecs_task_definition" "consul" {
     "memory": 50,
     "cpu": 1,
     "portMappings": [
-      {
-        "containerPort": 8500,
-        "hostPort": 80
-      }
     ]
   }
 ]
