@@ -12,7 +12,7 @@ resource "aws_ecs_task_definition" "consul" {
     "command": [
       "-bootstrap",
       "-atlas",
-      "flyhard/atlas",
+      "${var.atlasName}",
       "-atlas-token",
       "${var.atlas_token}",
       "-atlas-join"
