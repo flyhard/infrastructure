@@ -27,6 +27,7 @@ resource "aws_ecs_task_definition" "consul" {
         "awslogs-region": "${var.region}",
         "awslogs-group":"docker"
       }
+    }
   }
 ]
 EOF
