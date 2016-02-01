@@ -25,6 +25,7 @@ resource "aws_instance" "docker" {
   provisioner "remote-exec" {
     inline = [
         "sudo yum install -y puppet",
+        "sudo puppet apply /tmp/puppet/dockerServer.pp",
         "echo ECS_CLUSTER=${aws_ecs_cluster.docker.name} | sudo tee /etc/ecs/ecs.config",
         "sudo docker rm ecs-agent",
         "sudo rm -rf /var/lib/ecs/*",
