@@ -10,7 +10,7 @@ resource "aws_instance" "docker" {
   availability_zone = "${var.availability_zone}"
 
   tags = {
-    Name = "nat"
+    Name = "docker"
   }
   connection {
     user = "ec2-user"
@@ -18,8 +18,13 @@ resource "aws_instance" "docker" {
     private_key = "${var.private_key}"
     timeout = "5m"
   }
+  provisioner "file" {
+    source = "cloud-config"
+    destination = "/tmp/puppet/"
+  }
   provisioner "remote-exec" {
     inline = [
+        "sudo yum install -y puppet",
         "echo ECS_CLUSTER=${aws_ecs_cluster.docker.name} | sudo tee /etc/ecs/ecs.config",
         "sudo docker rm ecs-agent",
         "sudo rm -rf /var/lib/ecs/*",

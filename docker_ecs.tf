@@ -20,14 +20,7 @@ resource "aws_ecs_task_definition" "consul" {
     "memory": 50,
     "cpu": 1,
     "portMappings": [
-    ],
-    "logConfiguration": {
-      "logDriver": "awslogs",
-      "options": {
-        "awslogs-region": "${var.region}",
-        "awslogs-group":"docker"
-      }
-    }
+    ]
   }
 ]
 EOF
