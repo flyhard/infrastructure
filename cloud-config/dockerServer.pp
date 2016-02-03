@@ -28,7 +28,7 @@ service { 'docker':
 }
 exec { 'start ecs':
   require => [Service['docker'],File['/etc/ecs/ecs.config']],
-  path    => "/usr/local/bin:/usr/bin:/bin",
+  path    => "/usr/local/bin:/usr/bin:/bin:/sbin",
   onlyif  => 'test ! $(docker ps |grep ecs-agent)',
 }
 # End node mynode.example.com
