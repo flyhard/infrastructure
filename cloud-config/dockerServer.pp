@@ -25,6 +25,10 @@ user { 'ec2-user':
 service { 'docker':
   ensure => 'running',
 }
+exec { '/usr/libexec/amazon-ecs-init pre-start':
+  path   => "/usr/local/bin:/usr/bin:/bin",
+  onlyif => 'test ! $(docker ps |grep ecs-agent)'
+}
 exec { '/usr/libexec/amazon-ecs-init start':
   path   => "/usr/local/bin:/usr/bin:/bin",
   onlyif => 'test ! $(docker ps |grep ecs-agent)'
