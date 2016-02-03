@@ -38,11 +38,6 @@ variable "region" {
 variable "availability_zone" {
   default = "eu-west-1a"
 }
-variable "do_token" {
-}
-variable "do_region" {
-  default = "lon1"
-}
 
 variable "private_key" {
 }
@@ -59,4 +54,5 @@ variable "atlasName" {
 variable "consul_image" {
   default = "flyhard/consul"
 }
+variable "domain_name" {}
 
