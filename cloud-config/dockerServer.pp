@@ -26,15 +26,9 @@ service { 'docker':
   ensure    => 'running',
   subscribe => File['/etc/sysconfig/docker'],
 }
-exec { '/usr/libexec/amazon-ecs-init pre-start':
+exec { 'start ecs':
   require => [Service['docker'],File['/etc/ecs/ecs.config']],
   path    => "/usr/local/bin:/usr/bin:/bin",
   onlyif  => 'test ! $(docker ps |grep ecs-agent)',
-}
-exec { '/usr/libexec/amazon-ecs-init start':
-  require => Exec['/usr/libexec/amazon-ecs-init pre-start'],
-  path    => "/usr/local/bin:/usr/bin:/bin",
-  onlyif  => 'test ! $(docker ps |grep ecs-agent)',
-
 }
 # End node mynode.example.com
