@@ -26,8 +26,6 @@ resource "aws_instance" "docker" {
     inline = [
         "sudo yum install -y puppet3",
         "sudo FACTER_CLUSTER_NAME=${aws_ecs_cluster.docker.name} puppet apply /tmp/puppet/dockerServer.pp",
-        "sudo /usr/libexec/amazon-ecs-init start || cat /var/log/ecs/*",
-        "sudo usermod -a -G docker ec2-user"
     ]
   }
 }

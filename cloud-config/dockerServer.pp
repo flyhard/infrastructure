@@ -16,4 +16,13 @@ file { '/etc/ecs/ecs.config':
   content => template('/tmp/puppet/ecs.config'),
 }
 
+user {'ec2-user':
+  ensure => "present",
+  uid => 500,
+  gid => "ec2-user",
+  groups => ["wheel","docker"],
+}
+exec { '/usr/libexec/amazon-ecs-init start':
+   onlyif => '[[ ! $(docker ps |grep ecs-agent) ]]'
+}
 # End node mynode.example.com
