@@ -13,7 +13,7 @@ resource "aws_route53_record" "default" {
   records = [
     "173.254.28.90"]
 }
-resource "aws_route53_record" "default" {
+resource "aws_route53_record" "web" {
   zone_id = "${aws_route53_zone.abich_com.zone_id}"
   name = "abich.com"
   ttl = "300"
