@@ -30,6 +30,11 @@ resource "aws_instance" "docker" {
   }
 }
 
+resource "aws_eip" "docker" {
+  instance = "${aws_instance.docker.id}"
+  vpc = true
+}
+
 output "docker.ip" {
   value = "${aws_instance.docker.public_ip}"
 }
