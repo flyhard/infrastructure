@@ -8,13 +8,12 @@ file { '/etc/sysconfig/docker':
   content  => template("/tmp/puppet/docker"),
 }
 
-$ecs_config = @(END)
-  ECS_CLUSTER=$cluster_name
-END
-
 file { '/etc/ecs/ecs.config':
   ensure => "file",
-  content => inline_template($ecs_config)
+  owner   => "root",
+  group   => "root",
+  mode    => "644",
+  content => template('/tmp/puppet/ecs.config'),
 }
 
 # End node mynode.example.com
