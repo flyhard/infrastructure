@@ -23,14 +23,18 @@ user { 'ec2-user':
   groups => ["wheel","docker"],
 }
 service { 'docker':
-  ensure => 'running',
+  ensure    => 'running',
+  subscribe => File['/etc/sysconfig/docker'],
 }
 exec { '/usr/libexec/amazon-ecs-init pre-start':
-  path   => "/usr/local/bin:/usr/bin:/bin",
-  onlyif => 'test ! $(docker ps |grep ecs-agent)'
+  require => [Service['docker'],File['/etc/ecs/ecs.config']],
+  path    => "/usr/local/bin:/usr/bin:/bin",
+  onlyif  => 'test ! $(docker ps |grep ecs-agent)',
 }
 exec { '/usr/libexec/amazon-ecs-init start':
-  path   => "/usr/local/bin:/usr/bin:/bin",
-  onlyif => 'test ! $(docker ps |grep ecs-agent)'
+  require => Exec['/usr/libexec/amazon-ecs-init pre-start'],
+  path    => "/usr/local/bin:/usr/bin:/bin",
+  onlyif  => 'test ! $(docker ps |grep ecs-agent)',
+
 }
 # End node mynode.example.com
