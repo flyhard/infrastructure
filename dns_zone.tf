@@ -31,7 +31,7 @@ resource "aws_route53_record" "mail_mx" {
   ttl = "300"
   type = "MX"
   records = [
-    "10 mail.abich.com"]
+    "10 ${aws_route53_record.mail.name}"]
 }
 resource "aws_route53_record" "test" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
@@ -41,4 +41,12 @@ resource "aws_route53_record" "test" {
   records = [
     "${aws_eip.docker.public_ip}"
   ]
+}
+resource "aws_route53_record" "mail_mx" {
+  zone_id = "${aws_route53_zone.zone.zone_id}"
+  name = "test.${var.domain_name}"
+  ttl = "300"
+  type = "MX"
+  records = [
+    "10 ${aws_route53_record.test.name}"]
 }
