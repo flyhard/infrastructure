@@ -42,7 +42,7 @@ resource "aws_route53_record" "test" {
     "${aws_eip.docker.public_ip}"
   ]
 }
-resource "aws_route53_record" "mail_mx" {
+resource "aws_route53_record" "test_mx" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
   name = "test.${var.domain_name}"
   ttl = "300"
