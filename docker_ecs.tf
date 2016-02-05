@@ -21,6 +21,33 @@ resource "aws_ecs_task_definition" "consul" {
     "cpu": 1,
     "portMappings": [
     ]
+  },
+  {
+    "name": "registrator",
+    "image": "gliderlabs/registrator:latest",
+    "essential": true,
+    "command": [
+      "consul://localhost:8500"
+    ],
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+      {
+        "containerPort": 8500,
+        "hostPort": 8500
+      }
+    ],
+    "volumes": [
+      {
+        "name": "/var/run/docker.sock",
+        "host": {
+          "sourcepath": "/tmp/docker.sock"
+        }
+      }
+    ],
+    "links": [
+      "consul:consul"
+    ]
   }
 ]
 EOF
