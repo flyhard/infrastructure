@@ -1,19 +1,65 @@
-[
-  {
-    "name": "consul",
-    "image": "flyhard/consul",
-    "essential": true,
-    "command": [
-      "-atlas",
-      "flyhard/atlas"
-    ],
-    "memory": 50,
-    "cpu": 1,
-    "portMappings": [
-      {
-        "containerPort": 8500,
-        "hostPort": 8500
-      }
-    ]
-  }
-]
+{
+    "taskDefinition": {
+        "status": "ACTIVE", 
+        "family": "consul", 
+        "volumes": [
+            {
+                "host": {
+                    "sourcePath": "/var/run/docker.sock"
+                }, 
+                "name": "dockerSock"
+            }
+        ], 
+        "taskDefinitionArn": "arn:aws:ecs:eu-west-1:776793495141:task-definition/consul:23", 
+        "containerDefinitions": [
+            {
+                "environment": [], 
+                "name": "consul", 
+                "mountPoints": [], 
+                "image": "flyhard/consul", 
+                "cpu": 1, 
+                "portMappings": [], 
+                "command": [
+                    "-bootstrap", 
+                    "-atlas", 
+                    "flyhard/abich", 
+                    "-atlas-token", 
+                    "R2iZnO98qHt06g.atlasv1.1dMMQh9oyZtIOk7qNKGxcc6ZJalEpzUohRyf6oeztODgm1eBBvhhc6yXCyCGyi5IvbM", 
+                    "-atlas-join"
+                ], 
+                "memory": 50, 
+                "essential": true, 
+                "volumesFrom": []
+            }, 
+            {
+                "environment": [], 
+                "name": "registrator", 
+                "links": [
+                    "consul:consul"
+                ], 
+                "mountPoints": [
+                    {
+                        "sourceVolume": "dockerSock", 
+                        "containerPath": "/tmp/docker.sock"
+                    }
+                ], 
+                "image": "gliderlabs/registrator:latest", 
+                "essential": true, 
+                "portMappings": [
+                    {
+                        "protocol": "tcp", 
+                        "containerPort": 8500, 
+                        "hostPort": 8500
+                    }
+                ], 
+                "command": [
+                    "consul://consul:8500"
+                ], 
+                "memory": 50, 
+                "cpu": 1, 
+                "volumesFrom": []
+            }
+        ], 
+        "revision": 23
+    }
+}

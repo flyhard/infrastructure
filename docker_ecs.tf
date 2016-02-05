@@ -3,6 +3,10 @@ resource "aws_ecs_cluster" "docker" {
 }
 resource "aws_ecs_task_definition" "consul" {
   family = "consul"
+  volume= {
+      name = "dockerSock"
+      host_path = "/var/run/docker.sock"
+  }
   container_definitions = <<EOF
 [
   {
@@ -27,22 +31,14 @@ resource "aws_ecs_task_definition" "consul" {
     "image": "gliderlabs/registrator:latest",
     "essential": true,
     "command": [
-      "consul://localhost:8500"
+      "consul://consul:8500"
     ],
     "memory": 50,
     "cpu": 1,
-    "portMappings": [
+    "mountPoints": [
       {
-        "containerPort": 8500,
-        "hostPort": 8500
-      }
-    ],
-    "volumes": [
-      {
-        "name": "/var/run/docker.sock",
-        "host": {
-          "sourcepath": "/tmp/docker.sock"
-        }
+        "sourceVolume": "dockerSock",
+        "containerPath": "/tmp/docker.sock"
       }
     ],
     "links": [
