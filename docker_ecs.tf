@@ -55,3 +55,32 @@ resource "aws_ecs_service" "consul" {
   desired_count = 1
   task_definition = "${aws_ecs_task_definition.consul.arn}"
 }
+
+resource "aws_ecs_task_definition" "mail" {
+  family = "consul"
+  volume = {
+    name = "dockerSock"
+    host_path = "/var/run/docker.sock"
+  }
+  container_definitions = <<EOF
+[
+  {
+    "name": "postgrey",
+    "image": "flyhard/postgreydocker",
+    "essential": true,
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+    ]
+  }
+]
+EOF
+}
+
+  resource "aws_ecs_service" "mail" {
+    name = "consul"
+    cluster = "${aws_ecs_cluster.docker.id}"
+    count = 1
+    desired_count = 1
+    task_definition = "${aws_ecs_task_definition.mail.arn}"
+  }
