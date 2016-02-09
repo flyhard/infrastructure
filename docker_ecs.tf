@@ -57,7 +57,7 @@ resource "aws_ecs_service" "consul" {
 }
 
 resource "aws_ecs_task_definition" "mail" {
-  family = "consul"
+  family = "mail"
   volume = {
     name = "dockerSock"
     host_path = "/var/run/docker.sock"
@@ -78,7 +78,7 @@ EOF
 }
 
   resource "aws_ecs_service" "mail" {
-    name = "consul"
+    name = "mail"
     cluster = "${aws_ecs_cluster.docker.id}"
     count = 1
     desired_count = 1
