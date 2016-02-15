@@ -91,6 +91,18 @@ resource "aws_ecs_task_definition" "mail" {
     "links": [
       "consul:consul"
     ]
+  },
+  {
+    "name": "amavis",
+    "image": "flyhard/amavis",
+    "essential": true,
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+    ],
+    "links": [
+      "consul:consul"
+    ]
   }
 ]
 EOF
