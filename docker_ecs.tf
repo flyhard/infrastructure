@@ -65,12 +65,31 @@ resource "aws_ecs_task_definition" "mail" {
   container_definitions = <<EOF
 [
   {
+    "name": "consul",
+    "image": "flyhard/consul",
+    "essential": true,
+    "command": [
+      "-atlas",
+      "${var.atlasName}",
+      "-atlas-token",
+      "${var.atlas_token}",
+      "-atlas-join"
+    ],
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+    ]
+  },
+  {
     "name": "postgrey",
     "image": "flyhard/postgreydocker",
     "essential": true,
     "memory": 50,
     "cpu": 1,
     "portMappings": [
+    ],
+    "links": [
+      "consul:consul"
     ]
   }
 ]
