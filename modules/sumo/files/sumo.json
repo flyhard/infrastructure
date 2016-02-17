@@ -68,11 +68,20 @@
             "pathExpression": "/var/log/puppet/*"
         },
         {
+            "name": "docker?stats",
+            "uri": "unix:///var/run/docker.sock",
+            "specifiedContainers": [],
+            "allContainers": true,
+            "sourceType":"DockerStats",
+            "category": "Docker/Stats"
+        },
+        {
             "name": "container_logs",
             "uri": "unix:///var/run/docker.sock",
             "specifiedContainers": [],
             "allContainers": true,
-            "sourceType":"DockerStats"
+            "sourceType":"DockerLogs",
+            "category": "Docker/Logs"
         }
     ]
 }
