@@ -66,6 +66,13 @@
             "timeZone": "UTC",
             "category": "Deployment",
             "pathExpression": "/var/log/puppet/*"
+        },
+        {
+            "name": "container_logs",
+            "uri": "unix:///var/run/docker.sock",
+            "specifiedContainers": [],
+            "allContainers": true,
+            "sourceType":"DockerStats"
         }
     ]
 }
