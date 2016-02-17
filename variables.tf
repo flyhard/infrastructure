@@ -56,3 +56,6 @@ variable "consul_image" {
 }
 variable "domain_name" {}
 
+variable "sumo_id" {}
+
+variable "sumo_key" {}

@@ -50,6 +50,7 @@ EOF
 }
 resource "aws_ecs_service" "consul" {
   name = "consul"
+  depends_on = ["aws_instance.docker"]
   cluster = "${aws_ecs_cluster.docker.id}"
   count = 1
   desired_count = 1
@@ -110,6 +111,7 @@ EOF
 
   resource "aws_ecs_service" "mail" {
     name = "mail"
+    depends_on = ["aws_instance.docker"]
     cluster = "${aws_ecs_cluster.docker.id}"
     count = 1
     desired_count = 1
