@@ -64,11 +64,11 @@
             "useAutolineMatching": true,
             "forceTimeZone": false,
             "timeZone": "UTC",
-            "category": "Deployment",
+            "category": "OS/Deployment",
             "pathExpression": "/var/log/puppet/*"
         },
         {
-            "name": "docker?stats",
+            "name": "docker_stats",
             "uri": "unix:///var/run/docker.sock",
             "specifiedContainers": [],
             "allContainers": true,
@@ -76,12 +76,13 @@
             "category": "Docker/Stats"
         },
         {
-            "name": "container_logs",
+            "name": "docker_logs",
             "uri": "unix:///var/run/docker.sock",
             "specifiedContainers": [],
             "allContainers": true,
             "sourceType":"DockerLogs",
-            "category": "Docker/Logs"
+            "category": "Docker/Logs",
+            "collectEvents": true
         }
     ]
 }
