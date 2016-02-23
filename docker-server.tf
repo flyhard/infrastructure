@@ -34,7 +34,7 @@ resource "aws_instance" "docker" {
         "echo cluster_name: '${aws_ecs_cluster.docker.name}' | sudo tee /etc/facter/facts.d/config.yaml",
         "echo sumo_id: '${var.sumo_id}' | sudo tee -a /etc/facter/facts.d/config.yaml",
         "echo sumo_key: '${var.sumo_key}' | sudo tee -a /etc/facter/facts.d/config.yaml",
-        "sudo puppet apply /tmp/puppet/dockerServer.pp",
+        "sudo puppet apply --logdest syslog /tmp/puppet/dockerServer.pp",
     ]
   }
 }
