@@ -19,7 +19,7 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "airpair-example-default-vpc"
+    Name = "default-access"
   }
 }
 
@@ -69,7 +69,7 @@ resource "aws_security_group" "basics" {
   }
 
   tags {
-    Name = "nat-airpair-example"
+    Name = "main-server-basic-access"
   }
 }
 
@@ -96,7 +96,7 @@ resource "aws_security_group" "web" {
   }
 
   tags {
-    Name = "web-airpair-example"
+    Name = "web-server-access"
   }
 }
 
@@ -120,6 +120,6 @@ resource "aws_security_group" "smtp" {
       "0.0.0.0/0"]
   }
   tags {
-    Name = "SMTP"
+    Name = "smtp-group"
   }
 }
