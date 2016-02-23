@@ -27,7 +27,7 @@ resource "aws_route53_record" "mail" {
 }
 resource "aws_route53_record" "mail_mx" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
-  name = "mail.${var.domain_name}"
+  name = "${var.domain_name}"
   ttl = "300"
   type = "MX"
   records = [
