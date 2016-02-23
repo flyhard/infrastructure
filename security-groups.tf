@@ -1,6 +1,6 @@
 /* Default security group */
 resource "aws_security_group" "default" {
-  name = "default-airpair-example"
+  name = "default-access"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -24,8 +24,8 @@ resource "aws_security_group" "default" {
 }
 
 /* Security group for the nat server */
-resource "aws_security_group" "nat" {
-  name = "main server"
+resource "aws_security_group" "basics" {
+  name = "main-server-basic-access"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet. Also allows outbound HTTP[S]"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -75,7 +75,7 @@ resource "aws_security_group" "nat" {
 
 /* Security group for the web */
 resource "aws_security_group" "web" {
-  name = "web-airpair-example"
+  name = "web-server-access"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
 

@@ -3,7 +3,7 @@ resource "aws_instance" "docker" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.nano"
   subnet_id = "${aws_subnet.public.id}"
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.nat.id}", "${aws_security_group.smtp.id}"]
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.basics.id}", "${aws_security_group.smtp.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   source_dest_check = false
   iam_instance_profile = "${aws_iam_instance_profile.default.name}"
