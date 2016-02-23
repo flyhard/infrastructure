@@ -25,7 +25,7 @@ resource "aws_security_group" "default" {
 
 /* Security group for the nat server */
 resource "aws_security_group" "nat" {
-  name = "nat-airpair-example"
+  name = "main server"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet. Also allows outbound HTTP[S]"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -38,12 +38,13 @@ resource "aws_security_group" "nat" {
   }
 
   ingress {
-    from_port = 1194
-    to_port = 1194
-    protocol = "udp"
+    from_port = 25
+    to_port = 25
+    protocol = "tcp"
     cidr_blocks = [
       "0.0.0.0/0"]
   }
+
   egress {
     from_port = 80
     to_port = 80
@@ -60,10 +61,11 @@ resource "aws_security_group" "nat" {
       "0.0.0.0/0"]
   }
   egress {
-    protocol          = "-1"
-    from_port         = 0
-    to_port           = 0
-    cidr_blocks       = ["0.0.0.0/0"]
+    protocol = "-1"
+    from_port = 0
+    to_port = 0
+    cidr_blocks = [
+      "0.0.0.0/0"]
   }
 
   tags {
@@ -95,5 +97,29 @@ resource "aws_security_group" "web" {
 
   tags {
     Name = "web-airpair-example"
+  }
+}
+
+resource "aws_security_group" "smtp" {
+  name = "smtp-group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port = 25
+    to_port = 25
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+  tags {
+    Name = "SMTP"
   }
 }
