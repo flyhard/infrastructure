@@ -7,7 +7,7 @@ resource "aws_route53_record" "default" {
   ttl = "300"
   type = "A"
   records = [
-    "173.254.28.90"]
+    "${aws_instance.docker.public_ip}"]
 }
 resource "aws_route53_record" "web" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
@@ -15,7 +15,7 @@ resource "aws_route53_record" "web" {
   ttl = "300"
   type = "A"
   records = [
-    "173.254.28.90"]
+    "${aws_instance.docker.public_ip}"]
 }
 resource "aws_route53_record" "mail" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
@@ -23,7 +23,7 @@ resource "aws_route53_record" "mail" {
   ttl = "300"
   type = "A"
   records = [
-    "173.254.28.90"]
+    "${aws_instance.docker.public_ip}"]
 }
 resource "aws_route53_record" "mail_mx" {
   zone_id = "${aws_route53_zone.zone.zone_id}"
@@ -32,21 +32,4 @@ resource "aws_route53_record" "mail_mx" {
   type = "MX"
   records = [
     "10 ${aws_route53_record.mail.name}"]
-}
-resource "aws_route53_record" "test" {
-  zone_id = "${aws_route53_zone.zone.zone_id}"
-  name = "test.${var.domain_name}"
-  ttl = "60"
-  type = "A"
-  records = [
-    "${aws_eip.docker.public_ip}"
-  ]
-}
-resource "aws_route53_record" "test_mx" {
-  zone_id = "${aws_route53_zone.zone.zone_id}"
-  name = "test.${var.domain_name}"
-  ttl = "300"
-  type = "MX"
-  records = [
-    "10 ${aws_route53_record.test.name}"]
 }

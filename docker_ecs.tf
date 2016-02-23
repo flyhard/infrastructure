@@ -24,6 +24,10 @@ resource "aws_ecs_task_definition" "consul" {
     "memory": 50,
     "cpu": 1,
     "portMappings": [
+      {
+          "containerPort": 8500,
+          "hostPort": 8500
+      }
     ]
   },
   {
@@ -103,6 +107,23 @@ resource "aws_ecs_task_definition" "mail" {
     ],
     "links": [
       "consul:consul"
+    ]
+  },
+  {
+    "name": "mail",
+    "image": "flyhard/mailserver",
+    "essential": true,
+    "memory": 50,
+    "cpu": 1,
+    "portMappings": [
+      {
+          "containerPort": 25,
+          "hostPort": 25
+      }
+    ],
+    "links": [
+      "consul:consul",
+      "postgrey:postgrey"
     ]
   }
 ]

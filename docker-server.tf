@@ -35,6 +35,7 @@ resource "aws_instance" "docker" {
         "echo sumo_id: '${var.sumo_id}' | sudo tee -a /etc/facter/facts.d/config.yaml",
         "echo sumo_key: '${var.sumo_key}' | sudo tee -a /etc/facter/facts.d/config.yaml",
         "sudo puppet apply --logdest syslog /tmp/puppet/dockerServer.pp",
+        "sudo service sendmail stop",
     ]
   }
 }
