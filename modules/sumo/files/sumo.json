@@ -31,7 +31,7 @@
             "useAutolineMatching": true,
             "forceTimeZone": false,
             "timeZone": "UTC",
-            "category": "Docker",
+            "category": "OS/Linux/System",
             "pathExpression": "/var/log/docker"
         },
         {
@@ -53,7 +53,7 @@
             "useAutolineMatching": true,
             "forceTimeZone": false,
             "timeZone": "UTC",
-            "category": "Ecs agent",
+            "category": "AWS",
             "pathExpression": "/var/log/ecs/*"
         },
         {
@@ -73,7 +73,7 @@
             "specifiedContainers": [],
             "allContainers": true,
             "sourceType":"DockerStats",
-            "category": "Docker/Stats"
+            "category": "Docker"
         },
         {
             "name": "docker_logs",
@@ -81,7 +81,7 @@
             "specifiedContainers": [],
             "allContainers": true,
             "sourceType":"DockerLogs",
-            "category": "Docker/Logs",
+            "category": "Docker",
             "collectEvents": true
         }
     ]

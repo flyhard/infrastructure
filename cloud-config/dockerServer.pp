@@ -1,4 +1,5 @@
 include sumo
+include yum::update
 
 $region=$::ec2_placement_availability_zone
 

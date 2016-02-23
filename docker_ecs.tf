@@ -96,7 +96,7 @@ resource "aws_ecs_task_definition" "mail" {
   {
     "name": "amavis",
     "image": "flyhard/amavis",
-    "essential": true,
+    "essential": false,
     "memory": 50,
     "cpu": 1,
     "portMappings": [
