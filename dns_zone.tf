@@ -33,3 +33,11 @@ resource "aws_route53_record" "mail_mx" {
   records = [
     "10 ${aws_route53_record.mail.name}"]
 }
+
+resource "aws_route53_record" "spf" {
+  zone_id = "${aws_route53_zone.zone.zone_id}"
+  name="${var.domain_name}"
+  ttl="300"
+  type="TXT"
+  records = ["v=spf1 mx a ip4:${aws_eip.docker.public_ip]}/32 a:${aws_route53_record.mail.name} -all"]
+}
