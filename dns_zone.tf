@@ -43,3 +43,12 @@ resource "aws_route53_record" "spf" {
     "v=spf1 mx a ip4:${aws_eip.docker.public_ip}/32 a:${aws_route53_record.mail.name} -all"
   ]
 }
+resource "aws_route53_record" "dmarc" {
+  zone_id = "${aws_route53_zone.zone.zone_id}"
+  name = "_dmarc.${var.domain_name}"
+  ttl = "300"
+  type = "TXT"
+  records = [
+    "v=DMARC1; p=reject; sp=quarantine; rua=mailto:postmaster@${var.domain_name}; ruf=mailto:postmaster@${var.domain_name}; rf=afrf; pct=100; ri=86400"
+  ]
+}
