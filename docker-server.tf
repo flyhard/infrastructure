@@ -15,7 +15,7 @@ resource "aws_instance" "docker" {
   connection {
     user = "ec2-user"
     type = "ssh"
-    private_key = "${var.private_key}"
+    private_key = "${file(var.key_path)}"
     timeout = "5m"
   }
   provisioner "file" {

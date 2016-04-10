@@ -20,13 +20,8 @@
                 "cpu": 1, 
                 "portMappings": [], 
                 "command": [
-                    "-bootstrap", 
-                    "-atlas", 
-                    "flyhard/abich", 
-                    "-atlas-token", 
-                    "R2iZnO98qHt06g.atlasv1.1dMMQh9oyZtIOk7qNKGxcc6ZJalEpzUohRyf6oeztODgm1eBBvhhc6yXCyCGyi5IvbM", 
-                    "-atlas-join"
-                ], 
+                    "-bootstrap"
+                ],
                 "memory": 50, 
                 "essential": true, 
                 "volumesFrom": []
