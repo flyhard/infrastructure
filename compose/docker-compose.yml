@@ -1,0 +1,34 @@
+postgrey:
+  image: flyhard/postgreydocker
+  restart: always
+  links:
+    - consul-boot:consul
+
+mail:
+  image: flyhard/mailserver
+  links:
+    - postgrey:postgrey
+    - consul:consul
+  ports:
+   - "25:25"
+  restart: always
+consul-boot:
+  image: flyhard/consul
+  command: -bootstrap
+  restart: always
+
+consul:
+  image: flyhard/consul
+  restart: always
+  command: -retry-join consul
+  links:
+    - consul-boot:consul
+
+consul-ui:
+  image: flyhard/consul
+  command: -ui -retry-join consul
+  links:
+    - consul-boot:consul
+  ports:
+    - "8500:8500"
+  restart: always

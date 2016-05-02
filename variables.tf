@@ -17,14 +17,16 @@ variable "private_subnet_cidr" {
 variable "amis" {
   description = "Base AMI to launch the instances with trusty ubuntu 14.04 LTS	amd64	hvm:ebs-ssd"
   default = {
-    us-east-1 = "ami-67a3a90d"
-    us-west-1 = "ami-b7d5a8d7"
-    us-west-2 = "ami-c7a451a7"
-    eu-west-1 = "ami-9c9819ef"
-    eu-central-1 = "ami-9aeb0af5"
-    ap-northeast-1 = "ami-7e4a5b10"
-    ap-southeast-1 = "ami-be63a9dd"
-    ap-southeast-2 = "ami-b8cbe8db"
+    ap-northeast-1="ami-d7d4c5b9"
+    ap-northeast-2="ami-9a03caf4"
+    ap-southeast-1="ami-73974210"
+    ap-southeast-2="ami-09daf96a"
+    eu-central-1="ami-ccc021a3"
+    eu-west-1="ami-e079f893"
+    sa-east-1="ami-d3ae21bf"
+    us-east-1="ami-c8bda8a2"
+    us-west-1="ami-45374b25"
+    us-west-2="ami-98e114f8"
   }
 }
 variable "aws_account_id" {}

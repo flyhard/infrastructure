@@ -13,7 +13,7 @@ resource "aws_instance" "docker" {
     Name = "docker"
   }
   connection {
-    user = "ec2-user"
+    user = "admin"
     type = "ssh"
     private_key = "${file(var.key_path)}"
     timeout = "5m"
@@ -26,16 +26,18 @@ resource "aws_instance" "docker" {
     source = "modules"
     destination = "/tmp/modules"
   }
+  provisioner "file" {
+    source = "compose"
+    destination = "/tmp/compose"
+  }
+  provisioner "file" {
+    source = "scripts"
+    destination = "/tmp/scripts"
+  }
   provisioner "remote-exec" {
     inline = [
-        "sudo yum install -y puppet3",
-        "sudo mkdir -p /etc/facter/facts.d /etc/puppet",
-        "sudo mv /tmp/modules /etc/puppet/",
-        "echo cluster_name: '${aws_ecs_cluster.docker.name}' | sudo tee /etc/facter/facts.d/config.yaml",
-        "echo sumo_id: '${var.sumo_id}' | sudo tee -a /etc/facter/facts.d/config.yaml",
-        "echo sumo_key: '${var.sumo_key}' | sudo tee -a /etc/facter/facts.d/config.yaml",
-        "sudo puppet apply --logdest syslog /tmp/puppet/dockerServer.pp",
-        "sudo service sendmail stop",
+      "chmod +x /tmp/scripts/*",
+      "/tmp/scripts/provision.sh ${var.sumo_id} ${var.sumo_key}"
     ]
   }
 }
