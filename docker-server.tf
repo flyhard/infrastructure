@@ -31,6 +31,10 @@ resource "aws_instance" "docker" {
     destination = "/tmp/compose"
   }
   provisioner "file" {
+    source = "bin"
+    destination = "/tmp/bin"
+  }
+  provisioner "file" {
     source = "scripts"
     destination = "/tmp/scripts"
   }

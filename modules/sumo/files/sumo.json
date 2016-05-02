@@ -78,9 +78,8 @@
         {
             "name": "docker_logs",
             "uri": "unix:///var/run/docker.sock",
-            "specifiedContainers": [],
             "allContainers": true,
-            "sourceType":"DockerLogs",
+            "sourceType":"DockerLog",
             "category": "Docker",
             "collectEvents": true
         }

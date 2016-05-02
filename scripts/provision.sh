@@ -15,6 +15,7 @@ sudo service docker restart
 
 sudo mkdir -p /etc/facter/facts.d /etc/puppet
 sudo mv /tmp/modules /etc/puppet/
+sudo mv /tmp/bin/* /usr/local/bin
 
 sudo mv /tmp/compose /opt
 
@@ -26,8 +27,8 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.7.0/docker-co
 sudo chmod +x /usr/local/bin/docker-compose
 
 cd /opt/compose
-docker-compose up -d consul-boot
+sudo docker-compose up -d consul-boot
 sleep 5
-docker-compose up -d consul
+sudo docker-compose up -d consul
 sleep 5
-docker-compose up -d postgrey mail
+sudo docker-compose up -d postgrey mail
