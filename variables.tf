@@ -47,17 +47,12 @@ variable "availability_zone" {
 variable "public_key" {
 }
 
-variable "atlas_token" {
-}
-
-variable "atlasName" {
-  default = "flyhard/abich"
-}
-
 variable "consul_image" {
   default = "flyhard/consul"
 }
 variable "domain_name" {}
+
+variable "dmarc_email" {}
 
 variable "sumo_id" {}
 

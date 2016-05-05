@@ -49,6 +49,6 @@ resource "aws_route53_record" "dmarc" {
   ttl = "300"
   type = "TXT"
   records = [
-    "v=DMARC1; p=reject; sp=quarantine; rua=mailto:postmaster@${var.domain_name}; ruf=mailto:postmaster@${var.domain_name}; rf=afrf; pct=100; ri=86400"
+    "v=DMARC1; p=none; pct=100; rua=mailto:${var.dmarc_email}; sp=none; aspf=r;"
   ]
 }
