@@ -1,2 +1,5 @@
 *.tfvars
 *.backup
+.idea/
+*.iml
+provision_key
